@@ -2,21 +2,15 @@ import React, { Component } from 'react';
 import styles from './App.css';
 
 class App extends Component {
-
-
   state = {
     users: null,
     total: null,
     per_page: null,
     current_page: 1
   }
-
-
   componentDidMount() {
     this.makeHttpRequestWithPage(1);
   }
-
-
   makeHttpRequestWithPage = async pageNumber => {
     const response = await fetch(`https://reqres.in/api/users?page=${pageNumber}`, {
       method: 'GET',
@@ -27,7 +21,6 @@ class App extends Component {
     });
 
     const data = await response.json();
-
     this.setState({
       users: data.data,
       total: data.total,
@@ -35,12 +28,8 @@ class App extends Component {
       current_page: data.page
     });
   }
-
-
   render() {
-
     let users, renderPageNumbers;
-
     if (this.state.users !== null) {
       users = this.state.users.map(user => (
         <tr key={user.id}>
@@ -48,7 +37,7 @@ class App extends Component {
           <td>{user.first_name}</td>
           <td>{user.last_name}</td>
           <td>{user.email}</td>
-          <td><img src={user.avatar} alt={user.name} style={{borderRadius: "50%"}}/></td>
+          <td><img src={user.avatar} alt={user.name} style={{borderRadius: "50%", border: '3px solid #fff'}}/></td>
         </tr>
       ));
     }
@@ -58,11 +47,8 @@ class App extends Component {
       for (let i = 1; i <= Math.ceil(this.state.total / this.state.per_page); i++) {
         pageNumbers.push(i);
       }
-
-
       renderPageNumbers = pageNumbers.map(number => {
         let classes = this.state.current_page === number ? styles.active : '';
-
         return (
           <span key={number} className={classes} onClick={() => this.makeHttpRequestWithPage(number)}>{number}</span>
         );
@@ -70,10 +56,7 @@ class App extends Component {
     }
 
     return (
-
-
       <div className='app'>
-
         <table className='table'>
           <thead>
             <tr>
@@ -88,8 +71,6 @@ class App extends Component {
             {users}
           </tbody>
         </table>
-
-
         <div className='pagination'>
           <span onClick={() => this.makeHttpRequestWithPage(1)}>&laquo;</span>
           {renderPageNumbers}
@@ -99,7 +80,6 @@ class App extends Component {
       </div>
     );
   }
-
 }
 
 export default App;

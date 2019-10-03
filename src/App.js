@@ -48,7 +48,7 @@ class App extends Component {
         pageNumbers.push(i);
       }
       renderPageNumbers = pageNumbers.map(number => {
-        let classes = this.state.current_page === number ? styles.active : '';
+        let classes = this.state.current_page === number ? 'active' : '';
         return (
           <span key={number} className={classes} onClick={() => this.makeHttpRequestWithPage(number)}>{number}</span>
         );
